@@ -1,0 +1,7 @@
+prefix=/mnt/f/c2p_ppo/env
+includedir=${prefix}/include
+ 
+Name: KBProto
+Description: KB extension headers
+Version: 1.0.7
+Cflags: -I${includedir}

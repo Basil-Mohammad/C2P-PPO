@@ -1,0 +1,8 @@
+checkpoints/
+results/logs/
+__pycache__/
+*.pyc
+*.pt
+*.pth
+.env
+*.log

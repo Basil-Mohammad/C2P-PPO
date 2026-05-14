@@ -1,0 +1,2 @@
+Comparison,ΔReward,t-test p (reward),Wilcoxon p (reward),Cohen d (reward),Effect (reward),ΔViolation,t-test p (violation),Wilcoxon p (viol),Cohen d (violation),Effect (violation)
+C2P-PPO vs PPO (PointGoal),-14.004,0.0000,0.0020,-8.191,large,-0.0323,0.0000,0.0020,-3.488,large
