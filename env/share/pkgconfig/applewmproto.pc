@@ -1,7 +1,0 @@
-prefix=/mnt/f/c2p_ppo/env
-includedir=${prefix}/include
- 
-Name: AppleWMProto
-Description: AppleWM extension headers
-Version: 1.4.2
-Cflags: -I${includedir}

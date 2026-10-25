@@ -1,7 +1,0 @@
-Comparison,ΔReward,t-test p (reward),Wilcoxon p (reward),Cohen d (reward),Effect (reward),ΔViolation,t-test p (violation),Wilcoxon p (viol),Cohen d (violation),Effect (violation)
-C2P-PPO vs PPO,-13.318,0.2738,0.4316,-0.532,medium,+0.0136,0.1182,0.1309,0.790,medium
-C2P-PPO vs PPO-Lagrangian,-5.451,0.6040,0.4922,-0.249,small,+0.0082,0.3698,0.3223,0.435,small
-C2P-PPO vs Shielded PPO,+18.913,0.1111,0.0840,0.790,medium,-0.0136,0.2535,0.2324,-0.557,medium
-C2P-PPO vs CBF-PPO,+7.381,0.5554,0.6250,0.283,small,-0.0139,0.2985,0.4922,-0.507,medium
-C2P-PPO vs LTL-PPO,+12.032,0.2612,0.4316,0.549,medium,-0.0055,0.6485,0.7695,-0.219,small
-C2P-PPO vs CPO (approx.),+18.872,0.0943,0.0371,0.835,large,-0.0002,0.9814,0.9219,-0.011,negligible

@@ -1,7 +1,0 @@
-prefix=/mnt/f/c2p_ppo/env
-includedir=${prefix}/include
-
-Name: VideoProto
-Description: Video extension headers
-Version: 2.3.3
-Cflags: -I${includedir}
