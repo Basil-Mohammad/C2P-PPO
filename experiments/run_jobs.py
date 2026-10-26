@@ -28,10 +28,13 @@ def _done(out, j):
 
 
 def _estimate_h(j):
-    """Conservative duration estimates (hours) on a 4-core Kaggle CPU session."""
+    """Duration estimates (hours) on a 4-core Kaggle CPU session, measured on the first batch
+    (navigation: C2P-PPO 5.4 h, baselines 3.6-4.2 h; CartPole/arm: 0.6-1.5 h)."""
     nav = j["env"] in ("pointgoal", "cargoal")
     c2p = j["method"].startswith("c2p")
-    return (3.8 if c2p else 2.4) if nav else (1.3 if c2p else 0.8)
+    if nav:
+        return 5.8 if c2p else 4.6
+    return 1.6 if c2p else 1.1
 
 
 def _run(j, out, root, steps=None):
@@ -68,8 +71,8 @@ def main():
     J = jobs(a.group, a.env)
     J = [j for i, j in enumerate(J) if i % a.nshards == a.shard]
     todo = [j for j in J if not _done(a.out, j)]
-    # longest jobs first (navigation, then C2P variants) to reduce tail latency
-    todo.sort(key=lambda j: (j["env"] not in ("pointgoal", "cargoal"), not j["method"].startswith("c2p")))
+    # longest jobs first to reduce tail latency; within equal duration, lower seeds first
+    todo.sort(key=lambda j: (-_estimate_h(j), j["seed"]))
     print(f"[runner] shard {a.shard}/{a.nshards}: {len(J)} jobs, {len(todo)} to run, {a.workers} workers", flush=True)
     t_start, deadline = time.time(), time.time() + a.hours * 3600
     n_ok = n_err = 0
