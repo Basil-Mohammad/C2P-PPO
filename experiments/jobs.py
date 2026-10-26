@@ -15,7 +15,7 @@ import argparse
 import json
 
 SEEDS = list(range(10))
-MAIN_METHODS = ["ppo", "ppo_lag", "cpo", "pcpo", "focops", "shielded_ppo", "safety_layer", "lcrl_ppo", "c2p_ppo"]
+MAIN_METHODS = ["ppo", "ppo_lag", "cpo", "pcpo", "focops", "shielded_ppo", "safety_layer_v2", "lcrl_ppo", "c2p_ppo"]
 ENVS = ["cartpole", "pointgoal", "cargoal", "arm"]
 ABLATIONS = ["c2p_no_lagrangian", "c2p_no_shield", "c2p_fixed_alpha", "c2p_no_rnd", "c2p_no_is",
              "c2p_no_shaping", "c2p_geometric", "c2p_no_inadm_penalty"]
@@ -45,6 +45,10 @@ def jobs(group: str, env: str | None = None):
             for m in ABLATIONS:
                 for s in (SEEDS if e != "pointgoal" else SEEDS[:5]):   # 5 seeds on the costly navigation task
                     out.append(dict(env=e, method=m, seed=s, overrides={}, tag=""))
+    elif group == "slayer_fix":   # re-run of the corrected safety-layer baseline on the finished environments
+        for e in (["cartpole", "arm"] if not env else [env]):
+            for s in SEEDS:
+                out.append(dict(env=e, method="safety_layer_v2", seed=s, overrides={}, tag=""))
     elif group == "multi":
         for s in SEEDS:
             out.append(dict(env="arm", method="c2p_multi", seed=s, overrides={}, tag=""))

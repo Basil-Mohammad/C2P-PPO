@@ -25,6 +25,7 @@ PLAN = [
     ("sensitivity_cartpole", "sensitivity", "cartpole", 2, 11.0),
     ("sensitivity_arm", "sensitivity", "arm", 2, 11.0),
     ("multi_arm", "multi", None, 1, 11.0),
+    ("slayer_fix", "slayer_fix", None, 1, 11.0),
 ]
 
 

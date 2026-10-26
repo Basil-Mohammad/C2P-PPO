@@ -84,19 +84,25 @@ class SafetyLayerPPO(PPO):
         G = self.g(o)[0]                                           # m x act
         rho = torch.as_tensor(np.clip(rho, -1.0, 2.0), device=self.device, dtype=torch.float32)
         need = self.hp.sl_margin - rho - G @ a                     # constraint: rho + G a >= margin
-        lam = torch.clamp(need / (G.pow(2).sum(-1) + 1e-6), min=0.0)
+        lam = torch.clamp(need / (G.pow(2).sum(-1) + 1e-3), min=0.0)
         j = int(torch.argmax(lam))
-        return a + lam[j] * G[j], float(lam[j] > 0)
+        corr = lam[j] * G[j]
+        n = float(corr.norm())
+        if n > 2.0:                                                 # the action box has diameter 2
+            corr = corr * (2.0 / n)
+        return (a + corr).clamp(-1, 1), float(lam[j] > 0)
 
     @torch.no_grad()
     def act(self, obs_n, env=None):
         o = torch.as_tensor(obs_n, device=self.device).unsqueeze(0)
         d = self.actor.dist(o)
         a = d.sample()[0]
-        inter = 0.0
+        ex, inter = a.clamp(-1, 1), 0.0
         if self.trained and env is not None:
-            a, inter = self._project(o, a.clamp(-1, 1), env.robustness())
-        return {"act": a.cpu().numpy(), "exec": a.clamp(-1, 1).cpu().numpy(),
+            # the projection is part of the environment (Dalal et al., 2018): the policy
+            # gradient uses the policy's own sample a, the projected action is executed
+            ex, inter = self._project(o, ex, env.robustness())
+        return {"act": a.cpu().numpy(), "exec": ex.cpu().numpy(),
                 "logp": float(d.log_prob(a.unsqueeze(0)).sum(-1)), "v": float(self.vr(o)),
                 "vc": float(self.vc(o)), "is_w": 1.0, "mask": 1.0, "intervened": inter}
 

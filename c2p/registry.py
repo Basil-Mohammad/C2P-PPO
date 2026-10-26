@@ -16,7 +16,9 @@ from c2p.algos.trust_region import CPO, PCPO
 
 METHODS = {
     "ppo": PPO, "ppo_lag": PPOLagrangian, "cpo": CPO, "pcpo": PCPO, "focops": FOCOPS,
-    "shielded_ppo": ShieldedPPO, "safety_layer": SafetyLayerPPO, "lcrl_ppo": LCRLPPO, "c2p_ppo": C2PPPO, "c2p_multi": C2PPPOMulti,
+    "shielded_ppo": ShieldedPPO, "safety_layer": SafetyLayerPPO,
+    # v2: numerically stable projection; the policy gradient uses the pre-projection sample
+    "safety_layer_v2": SafetyLayerPPO, "lcrl_ppo": LCRLPPO, "c2p_ppo": C2PPPO, "c2p_multi": C2PPPOMulti,
 }
 
 ABLATIONS = {

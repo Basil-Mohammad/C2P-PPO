@@ -21,12 +21,12 @@ plt.rcParams.update({"font.size": 9, "axes.titlesize": 9, "axes.labelsize": 9, "
                      "axes.spines.right": False, "pdf.fonttype": 42, "figure.dpi": 150})
 
 LABEL = {"ppo": "PPO", "ppo_lag": "PPO-Lag", "cpo": "CPO", "pcpo": "PCPO", "focops": "FOCOPS",
-         "shielded_ppo": "Shielded PPO", "safety_layer": "Safety layer", "lcrl_ppo": "LCRL-PPO",
+         "shielded_ppo": "Shielded PPO", "safety_layer": "Safety layer", "safety_layer_v2": "Safety layer", "lcrl_ppo": "LCRL-PPO",
          "c2p_ppo": "C2P-PPO (ours)", "c2p_multi": "C2P-PPO multi-$\\lambda$",
          "c2p_no_lagrangian": "w/o Lagrangian", "c2p_no_shield": "w/o shield", "c2p_fixed_alpha": "w/o adaptive $\\alpha$",
          "c2p_no_rnd": "w/o RND", "c2p_no_is": "w/o IS weights", "c2p_no_shaping": "w/o shaping",
          "c2p_geometric": "geometric mixture", "c2p_no_inadm_penalty": "w/o blocked-action penalty"}
-ORDER = ["ppo", "ppo_lag", "cpo", "pcpo", "focops", "shielded_ppo", "safety_layer", "lcrl_ppo", "c2p_ppo"]
+ORDER = ["ppo", "ppo_lag", "cpo", "pcpo", "focops", "shielded_ppo", "safety_layer_v2", "lcrl_ppo", "c2p_ppo"]
 COLORS = dict(zip(ORDER, ["#9e9e9e", "#4c72b0", "#55a868", "#8172b2", "#64b5cd", "#ccb974", "#937860",
                           "#da8bc3", "#c44e52"]))
 ENV_TITLE = {"cartpole": "CartPole-Track", "pointgoal": "SafetyPointGoal1", "cargoal": "SafetyCarGoal1",
