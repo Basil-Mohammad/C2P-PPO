@@ -16,7 +16,7 @@ import json
 
 SEEDS = list(range(10))
 MAIN_METHODS = ["ppo", "ppo_lag", "cpo", "pcpo", "focops", "shielded_ppo", "safety_layer_v2", "lcrl_ppo", "c2p_ppo"]
-ENVS = ["cartpole", "pointgoal", "cargoal", "arm"]
+ENVS = ["cartpole", "pointgoal", "cargoal", "arm", "cheetah", "hopper"]
 ABLATIONS = ["c2p_no_lagrangian", "c2p_no_shield", "c2p_fixed_alpha", "c2p_no_rnd", "c2p_no_is",
              "c2p_no_shaping", "c2p_geometric", "c2p_no_inadm_penalty"]
 SENSITIVITY = {
@@ -49,6 +49,9 @@ def jobs(group: str, env: str | None = None):
         for e in (["cartpole", "arm"] if not env else [env]):
             for s in SEEDS:
                 out.append(dict(env=e, method="safety_layer_v2", seed=s, overrides={}, tag=""))
+    elif group == "fill_pointgoal":   # two safety-layer seeds that an outdated notebook ran with the old code
+        for s in (0, 5):
+            out.append(dict(env="pointgoal", method="safety_layer_v2", seed=s, overrides={}, tag=""))
     elif group == "multi":
         for s in SEEDS:
             out.append(dict(env="arm", method="c2p_multi", seed=s, overrides={}, tag=""))

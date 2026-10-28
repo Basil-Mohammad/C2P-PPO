@@ -19,6 +19,8 @@ PLAN = [
     ("main_cargoal", "main", "cargoal", 5, 10.5),
     ("main_cartpole", "main", "cartpole", 2, 11.0),
     ("main_arm", "main", "arm", 2, 11.0),
+    ("main_hopper", "main", "hopper", 2, 11.0),
+    ("main_cheetah", "main", "cheetah", 2, 11.0),
     ("ablation_cartpole", "ablation", "cartpole", 2, 11.0),
     ("ablation_arm", "ablation", "arm", 2, 11.0),
     ("ablation_pointgoal", "ablation", "pointgoal", 3, 10.5),
@@ -26,6 +28,7 @@ PLAN = [
     ("sensitivity_arm", "sensitivity", "arm", 2, 11.0),
     ("multi_arm", "multi", None, 1, 11.0),
     ("slayer_fix", "slayer_fix", None, 1, 11.0),
+    ("fill_pointgoal", "fill_pointgoal", None, 1, 7.0),
 ]
 
 

@@ -28,8 +28,8 @@ LABEL = {"ppo": "PPO", "ppo_lag": "PPO-Lag", "cpo": "CPO", "pcpo": "PCPO", "foco
 COLORS = {"ppo": "#9e9e9e", "ppo_lag": "#4c72b0", "cpo": "#55a868", "pcpo": "#8172b2", "focops": "#64b5cd",
           "lcrl_ppo": "#da8bc3", "shielded_ppo": "#ccb974", "safety_layer_v2": "#937860", "c2p_ppo": "#c44e52"}
 ENV_TITLE = {"cartpole": "CartPole-Track", "pointgoal": "SafetyPointGoal1", "cargoal": "SafetyCarGoal1",
-             "arm": "SafeArmReach-6DoF"}
-BUDGET = {"cartpole": 0.05, "pointgoal": 0.025, "cargoal": 0.025, "arm": 0.01}
+             "arm": "SafeArmReach-6DoF", "cheetah": "SafetyHalfCheetahVelocity", "hopper": "SafetyHopperVelocity"}
+BUDGET = {"cartpole": 0.05, "pointgoal": 0.025, "cargoal": 0.025, "arm": 0.01, "cheetah": 0.025, "hopper": 0.025}
 
 
 def fmt(v, lo, hi, d=1):

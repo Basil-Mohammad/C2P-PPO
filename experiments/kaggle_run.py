@@ -73,7 +73,7 @@ def main():
 
     # 3b. smoke test: a very short training run in this session's environment
     smoke_env = env or "arm"
-    smoke_method = "safety_layer_v2" if group == "slayer_fix" else "c2p_ppo"
+    smoke_method = "safety_layer_v2" if group in ("slayer_fix", "fill_pointgoal") else "c2p_ppo"
     rc = sh(f"cd {CODE} && PYTHONWARNINGS=ignore {py} -m c2p.train --env {smoke_env} --method {smoke_method} --seed 0 "
             f"--out /tmp/smoke --steps 3000 --set steps_per_update=1000 shield_warmup_updates=1 2>&1 | tail -25", check=False)
     if not os.path.exists(f"/tmp/smoke/{smoke_env}/{smoke_method}/seed0/summary.json"):

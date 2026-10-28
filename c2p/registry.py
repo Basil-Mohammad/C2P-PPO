@@ -40,6 +40,10 @@ ENVS = {
                       hp=dict(steps_per_update=20000, lambda_r=0.1, lcrl_eta=0.05, minibatch=1024)),
     "cargoal": dict(total_steps=2_000_000, eval_every=200_000,
                     hp=dict(steps_per_update=20000, lambda_r=0.1, lcrl_eta=0.05, minibatch=1024)),
+    "cheetah": dict(total_steps=1_000_000, eval_every=50_000,
+                    hp=dict(steps_per_update=8000, lambda_r=1.0, lcrl_eta=0.5, minibatch=512)),
+    "hopper": dict(total_steps=1_000_000, eval_every=50_000,
+                   hp=dict(steps_per_update=8000, lambda_r=1.0, lcrl_eta=0.5, minibatch=512)),
     "arm": dict(total_steps=1_000_000, eval_every=50_000,
                 hp=dict(steps_per_update=8000, lambda_r=1.0, lcrl_eta=0.5, minibatch=512)),
 }
@@ -55,6 +59,12 @@ def make_env(name: str):
     if name == "cargoal":
         from c2p.envs.safety_nav import SafetyNav
         return SafetyNav("SafetyCarGoal1-v0")
+    if name == "cheetah":
+        from c2p.envs.safety_velocity import SafetyVelocity
+        return SafetyVelocity("SafetyHalfCheetahVelocity-v1")
+    if name == "hopper":
+        from c2p.envs.safety_velocity import SafetyVelocity
+        return SafetyVelocity("SafetyHopperVelocity-v1")
     if name == "arm":
         from c2p.envs.arm import SafeArmReach
         return SafeArmReach()
