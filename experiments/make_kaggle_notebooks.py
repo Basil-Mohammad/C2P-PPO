@@ -29,6 +29,7 @@ PLAN = [
     ("multi_arm", "multi", None, 1, 11.0),
     ("slayer_fix", "slayer_fix", None, 1, 11.0),
     ("fill_pointgoal", "fill_pointgoal", None, 1, 7.0),
+    ("ablation_velocity", "ablation_velocity", None, 1, 11.0),
 ]
 
 

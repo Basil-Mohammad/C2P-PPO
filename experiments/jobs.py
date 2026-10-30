@@ -49,6 +49,11 @@ def jobs(group: str, env: str | None = None):
         for e in (["cartpole", "arm"] if not env else [env]):
             for s in SEEDS:
                 out.append(dict(env=e, method="safety_layer_v2", seed=s, overrides={}, tag=""))
+    elif group == "ablation_velocity":   # the two shield components in the tasks with a reliable surrogate
+        for e in ([env] if env else ["hopper", "cheetah"]):
+            for m in ("c2p_no_shield", "c2p_no_inadm_penalty"):
+                for s in SEEDS:
+                    out.append(dict(env=e, method=m, seed=s, overrides={}, tag=""))
     elif group == "fill_pointgoal":   # two safety-layer seeds that an outdated notebook ran with the old code
         for s in (0, 5):
             out.append(dict(env="pointgoal", method="safety_layer_v2", seed=s, overrides={}, tag=""))
