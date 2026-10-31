@@ -10,7 +10,8 @@ V = [("c2p_no_lagrangian", "w/o Lagrangian"), ("c2p_no_shield", "w/o shield"),
      ("c2p_no_inadm_penalty", "w/o blocked-action penalty"), ("c2p_no_is", "w/o importance weights"),
      ("c2p_fixed_alpha", "fixed $\\alpha$"), ("c2p_no_shaping", "w/o reward shaping"),
      ("c2p_no_rnd", "w/o RND"), ("c2p_geometric", "geometric mixture")]
-ENVS = [("cartpole", "CartPole-Track", 0.05), ("arm", "SafeArmReach-6DoF", 0.01)]
+ENVS = [("cartpole", "CartPole-Track", 0.05), ("hopper", "SafetyHopperVelocity", 0.025),
+        ("cheetah", "SafetyHalfCheetahVelocity", 0.025), ("arm", "SafeArmReach-6DoF", 0.01)]
 def p(x): return f"{x:.3f}" if x >= 0.001 else "$<$0.001"
 lines = []
 for env, title, B in ENVS:
@@ -18,6 +19,8 @@ for env, title, B in ENVS:
     rows = []
     for m, lab in V:
         h = g[g.run == m]
+        if len(h) < 3:          # variant not run in this environment
+            continue
         rows.append(dict(lab=lab, ret=iqm(h.eval_return), viol=iqm(h.eval_viol_rate), tcr=iqm(h.train_cost_rate),
                          feas=(h.eval_viol_rate <= B).sum(), n=len(h),
                          pr=mannwhitneyu(h.eval_return, base.eval_return).pvalue,
