@@ -162,8 +162,12 @@ def learning_curves(E, C, envs, out):
 
 
 def tradeoff(R, envs, out):
-    fig, axes = plt.subplots(1, len(envs), figsize=(3.3 * len(envs), 2.9), squeeze=False)
-    for ax, env in zip(axes[0], envs):
+    """Grid of panels (three per row) with the legend in the free cell, so that each panel is legible."""
+    ncol = 3
+    nrow = int(np.ceil((len(envs) + 1) / ncol))
+    fig, axes = plt.subplots(nrow, ncol, figsize=(13.5, 4.6 * nrow), squeeze=False)
+    flat = axes.ravel()
+    for ax, env in zip(flat, envs):
         g = R[R.env == env]
         for m in ORDER:
             h = g[g.run == m]
@@ -174,17 +178,22 @@ def tradeoff(R, envs, out):
             rlo, rhi = bootstrap_ci(h.eval_return.values, n_boot=4000)
             star = m == "c2p_ppo"
             ax.errorbar(vx, ry, xerr=[[vx - vlo], [vhi - vx]], yerr=[[ry - rlo], [rhi - ry]],
-                        fmt="*" if star else "o", ms=11 if star else 5, color=COLORS[m], label=LABEL[m],
-                        capsize=2, lw=0.8, zorder=3 if star else 2)
+                        fmt="*" if star else "o", ms=16 if star else 8, color=COLORS[m], label=LABEL[m],
+                        capsize=3, lw=1.2, zorder=3 if star else 2)
         ax.axvspan(0, BUDGET[env], color="#2ca02c", alpha=0.09, lw=0)
-        ax.axvline(BUDGET[env], color="k", ls=":", lw=1)
+        ax.axvline(BUDGET[env], color="k", ls=":", lw=1.2)
         ax.set_xscale("symlog", linthresh=BUDGET[env] / 2)
-        ax.set_xlim(left=0)
-        ax.set_title(ENV_TITLE[env]); ax.set_xlabel("evaluation violation rate (IQM)")
-    axes[0, 0].set_ylabel("evaluation return (IQM)")
-    h, l = axes[0, 0].get_legend_handles_labels()
-    fig.legend(h, l, loc="lower center", ncol=5, frameon=False, bbox_to_anchor=(0.5, -0.02))
-    fig.tight_layout(rect=(0, 0.13, 1, 1))
+        ax.set_xlim(left=-0.12 * BUDGET[env])   # keep points at zero violations fully visible
+        ax.set_title(ENV_TITLE[env], fontsize=14)
+        ax.set_xlabel("evaluation violation rate (IQM)", fontsize=12)
+        ax.set_ylabel("evaluation return (IQM)", fontsize=12)
+        ax.tick_params(labelsize=11)
+        ax.grid(alpha=0.3)
+    h, l = flat[0].get_legend_handles_labels()
+    for ax in flat[len(envs):]:
+        ax.axis("off")
+    flat[len(envs)].legend(h, l, loc="center", frameon=False, fontsize=13, ncol=1)
+    fig.tight_layout()
     fig.savefig(os.path.join(out, "fig_tradeoff.pdf"), bbox_inches="tight")
     plt.close(fig)
 
